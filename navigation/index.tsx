@@ -34,7 +34,7 @@ export default function Navigation({ colorScheme }: { colorScheme: ColorSchemeNa
  * https://reactnavigation.org/docs/modal
  */
 const Stack = createNativeStackNavigator<RootStackParamList>();
-
+//TODOS: Create dynamically generated pages, maybe look into function generators?
 function RootNavigator() {
   return (
     <Stack.Navigator>
