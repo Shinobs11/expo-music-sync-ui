@@ -8,7 +8,7 @@ export default function TabTwoScreen() {
     
   return (
     <View style={styles.container}>
-        <AppBar/>
+        <AppBar />
         
     </View>
   );

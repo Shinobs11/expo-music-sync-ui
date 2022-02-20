@@ -2,7 +2,7 @@
 
 
 
-namespace customTypes{
+declare namespace customTypes{
 
 
 
@@ -80,11 +80,22 @@ export interface ImageObject {
 // export type Album = Pick<ContentTypes, "album">
 // export type Show = Pick<ContentTypes, "show">
 // export type Episode = Pick<ContentTypes, "episode">
+export interface PagingObject<T> {
+    href: string;
+    items: T[];
+    limit: number;
+    next: string | null;
+    offset: number;
+    previous: string | null;
+    total: number;
+}
+
 export interface ContextObject {
     /**
      * The object type.
      */
-    // type: "artist" | "playlist" | "album" | "show" | "episode";
+
+
     type: string
     /**
      * A link to the Web API endpoint providing full details.
@@ -457,11 +468,68 @@ export interface CommonContentProperties{
 
 
 // //TODOS: Make sure that we request full data upon entering object
-export type ContentResponseData = ArtistObjectSimplified | PlaylistObjectSimplified |  AlbumObjectSimplified
+export type ContentListResponseData = PlaylistObjectSimplified | PlaylistObjectFull| AlbumObjectSimplified | AlbumObjectFull | TrackObjectFull | TrackObjectSimplified | ArtistObjectSimplified | ArtistObjectFull
 
 
+export type AlbumContentItem = {
 
+    artists: ArtistObjectSimplified[],
+    id: string,
+    images: ImageObject[],
+    name: string,
+    release_date: string,
+    total_tracks: number,
+    type: string,
 }
+
+export type PlaylistContentItem = {
+        collaborative: boolean,
+        description: string | null,
+        id: string,
+        images: ImageObject[],
+        name: string,
+        owner:  UserObjectPublic ,
+        public: boolean|null,
+        tracks: {
+            href: string,
+            total: number
+        },
+        type:string,
+}
+
+export type ArtistContentItem = {
+        name: string,
+        id: string,
+        followers: FollowersObject,
+        genres: string[],
+        popularity: number,
+        images: ImageObject[],
+        type: string,
+    }
+
+export type TrackContentItem = {
+        artists: ArtistObjectSimplified[],
+        duration_ms: number,
+        explicit: boolean,
+        data: ExternalUrlObject,
+        href: string,
+        id: string,
+        //is_playable
+        name: string,
+        track_number: number,
+        
+}
+}
+
+
+
+
+
+
+
+
+
+
 
 
 

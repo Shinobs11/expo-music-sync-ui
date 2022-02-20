@@ -1,18 +1,23 @@
+/* eslint-disable react/prop-types */
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import React from 'react';
 import { VStack,  Center, Box, Divider, Text, HStack} from 'native-base';
 import { useTheme} from '@react-navigation/native'
 import {StyleSheet, Image,  View} from 'react-native';
 import { propsFlattener } from 'native-base/lib/typescript/hooks/useThemeProps/propsFlattener';
+import customTypes from '../../types/CustomTypes';
 
 //todos: need to make a content item with an image to left and text to right
 //todos: research caching images on react-native
 export interface ContentItemProps{
-    contentShape: "box" | "bar",
-    imageShape: "square" | "avatar",
+    
+    itemData: customTypes.AlbumContentItem |customTypes.ArtistContentItem | customTypes.TrackContentItem | customTypes.PlaylistContentItem,
+    contentShape: string,
+    imageShape: string,
     contentName: string,
     contentOwner?: string,
     image?: string,
-    nav: ()=>{}
+    nav: ()=>void
 }
 
 const ContentItem = (props:ContentItemProps) => {
@@ -102,6 +107,7 @@ const ContentItem = (props:ContentItemProps) => {
             
     )
 }
+
 
 
 export default ContentItem;

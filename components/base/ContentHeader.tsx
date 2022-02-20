@@ -1,8 +1,8 @@
-import React from 'react';
-import { StyleSheet,  View, Text, Image} from 'react-native';
+import React,{useEffect, useRef} from 'react';
+import { StyleSheet,  View, Text, Image, LayoutChangeEvent, Animated, GestureResponderEvent} from 'react-native';
 import customTypes from '../../types/CustomTypes';
 
-import {useTheme} from '@react-navigation/native';
+import {Theme}from '@react-navigation/native';
 
 
 interface PropsType {
@@ -10,13 +10,21 @@ interface PropsType {
     name: string,
     owner?: string,
     type: string,
+    colorTheme: Theme
 
 }
 
 
-const ContentHeader = (props:PropsType) =>{
-const { dark, colors } = useTheme();
-const s = StyleSheet.create({
+class ContentHeader extends React.Component<PropsType>{
+
+    constructor(props:PropsType){
+        super(props);
+        this.state ={
+            ref: 0
+        }
+    }
+    
+    s = StyleSheet.create({
     topContainer:{
         display: "flex",
         flexDirection: 'row',
@@ -41,29 +49,35 @@ const s = StyleSheet.create({
     },
     nameStyle:{
         flex: 1,
-        color:colors.text,
+        color: this.props.colorTheme.colors.text,
         fontSize:28,
         fontWeight: 'bold'
     }
 })
-    return(
-    <View style={s.topContainer}>
-        <View style={s.imageContainer}>
+    
+    render(){
+        
+        return(
+    <View
+    style={this.s.topContainer}
+    >
+        <View style={this.s.imageContainer}>
         <Image
-        accessibilityLabel={props.name}
-        style={s.image}
-        source={{uri:props.images.url}}
+        accessibilityLabel={this.props.name}
+        style={this.s.image}
+        source={{uri:this.props.images.url}}
         />
         </View>
-        <View style={s.sideContainer}>
+        <View style={this.s.sideContainer}>
         <Text 
         selectable
-        style={s.nameStyle}>
-            {props.name}
+        style={this.s.nameStyle}>
+            {this.props.name}
         </Text>
         </View>
     </View>
-    )
+        )
+    }
 }
 
 

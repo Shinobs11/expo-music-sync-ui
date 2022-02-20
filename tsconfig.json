@@ -14,7 +14,8 @@
     "resolveJsonModule": true,
     "skipLibCheck": true,
     "target": "ESNext",
-    "strict": true
+    "strict": true,
+    "noErrorTruncation": true
   },
   "exclude": [
     "node_modules",
@@ -22,5 +23,6 @@
     "metro.config.js",
     "jest.config.js"
   ],
+  
   "extends": "expo/tsconfig.base"
 }
