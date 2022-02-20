@@ -12,13 +12,15 @@ console.log(PixelRatio.get());
 //right padding 377-361 =16
 
 
+//TODOS: Have a smooth transition between ContentHeader fading and the Content title appearing on AppBar
+
 const AppBar = () =>{
     const {height, width} =  useWindowDimensions();
     const {dark, colors} = useTheme();
     const s = StyleSheet.create({
         container:{
             paddingHorizontal:15,
-            paddingTop:28,
+            paddingTop:7,
             paddingBottom:21,
             backgroundColor: colors.background,
             justifyContent:"space-between",
@@ -39,6 +41,7 @@ const AppBar = () =>{
     
     })
     console.log(height, width);
+    //TODOS: Migrate away from native-base components when ready, I don't think they'll provide great performance.
     return(
         <>
         <HStack style={s.container}>
@@ -48,9 +51,9 @@ const AppBar = () =>{
             </Text>
           </HStack>
           <HStack>
+          <IconButton icon={<Icon as={MaterialIcons} name="search" size="sm" color="white" />} />
             <IconButton icon={<Icon as={MaterialIcons} name="favorite" size="sm" color="white" />} />
             <IconButton icon={<Icon as={MaterialIcons} name="settings" size="sm" color="white" />} />
-            <IconButton icon={<Icon as={MaterialIcons} name="search" size="sm" color="white" />} />
           </HStack>
         </HStack>
       </>

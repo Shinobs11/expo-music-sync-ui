@@ -1,6 +1,6 @@
 import React from 'react';
 import { VStack,  Center, Box, Divider, Text, HStack} from 'native-base';
-import { useTheme } from '@react-navigation/native'
+import { useTheme} from '@react-navigation/native'
 import {StyleSheet, Image,  View} from 'react-native';
 import { propsFlattener } from 'native-base/lib/typescript/hooks/useThemeProps/propsFlattener';
 
@@ -11,11 +11,13 @@ export interface ContentItemProps{
     imageShape: "square" | "avatar",
     contentName: string,
     contentOwner?: string,
-    image?: string
+    image?: string,
+    nav: ()=>{}
 }
 
 const ContentItem = (props:ContentItemProps) => {
     const { dark, colors } = useTheme();
+    
     const s = StyleSheet.create({
         container:{
             paddingHorizontal: 15,

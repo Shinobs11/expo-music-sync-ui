@@ -8,14 +8,15 @@ import Example from '../components/Example';
 import AppBar from '../components/AppBar';
 import ContentItem from '../components/base/ContentItem'
 import PlaylistList from '../components/ContentList'
-export default function TabOneScreen({ navigation }: RootTabScreenProps<'TabOne'>) {
+function TabOneScreen(navigation: RootTabScreenProps<'TabOne'>) {
+
   return (
     <View
     
     >
         {/* <Example/> */}
         <AppBar/>
-        <PlaylistList data={data}/>
+        <PlaylistList navigation={navigation} data={data}/>
     </View>
   );
 }
@@ -26,3 +27,4 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   }
 });
+export default TabOneScreen

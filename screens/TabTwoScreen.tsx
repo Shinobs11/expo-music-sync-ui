@@ -1,23 +1,23 @@
 import { StyleSheet } from 'react-native';
-
-import EditScreenInfo from '../components/EditScreenInfo';
+import AppBar from '../components/AppBar';
 import { Text, View } from '../components/Themed';
+import ContentHeader from '../components/base/ContentHeader';
+import customTypes from '../types/CustomTypes';
 
 export default function TabTwoScreen() {
+    
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Tab Two</Text>
-      <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
-      <EditScreenInfo path="/screens/TabTwoScreen.tsx" />
+        <AppBar/>
+        
     </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
+    height:"100%",
+    width: "100%"
   },
   title: {
     fontSize: 20,

@@ -7,7 +7,7 @@ import useCachedResources from './hooks/useCachedResources';
 import useColorScheme from './hooks/useColorScheme';
 import Navigation from './navigation';
 import { useTheme, DefaultTheme, DarkTheme } from '@react-navigation/native';
-
+import AppBar from './components/AppBar';
 export default function App() {
   const isLoadingComplete = useCachedResources();
   const colorScheme = useColorScheme();
@@ -29,6 +29,7 @@ const theme = (colorScheme === 'dark') ? DarkTheme : DefaultTheme
     <NativeBaseProvider >
     <SafeAreaProvider>
       <StatusBar backgroundColor={Platform.OS == 'android' ? theme.colors.background: undefined }  />
+      
         <Navigation colorScheme={colorScheme} /> 
       </SafeAreaProvider>
       </NativeBaseProvider>
