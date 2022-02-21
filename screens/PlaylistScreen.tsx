@@ -11,7 +11,7 @@ import AppBar from '../components/AppBar';
 import ContentList from '../components/ContentList';
 import lizziePlaylistItems from '../test-data/lizziePlaylistItems.json'
 import customTypes from '../types/CustomTypes';
-import { ContentTypes } from '../constants/ContentTypes';
+import { ContentTypes } from '../constants/ContentConstants';
 export default function PlaylistScreen({navigation, route}:RootStackScreenProps<"playlist">) {
 
     const scrollY = useRef(new Animated.Value(0));

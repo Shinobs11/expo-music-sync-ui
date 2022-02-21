@@ -11,7 +11,7 @@ import Navigation from '../navigation/index';
 import { RootTabScreenProps, RootStackParamList, RootStackScreenProps} from '../types';
 import { NativeStackScreenProps, NativeStackNavigationProp } from '@react-navigation/native-stack';
 import ContentHeader from '../components/base/ContentHeader';
-import {ContentTypes} from '../constants/ContentTypes'
+import {ContentTypes} from '../constants/ContentConstants'
 import {Theme}from '@react-navigation/native';
 
 //TODOS: generalize component to reuse for other types of lists
@@ -20,7 +20,7 @@ import {Theme}from '@react-navigation/native';
 type PropsType = {
     data: customTypes.ContentListResponseData[] | customTypes.TrackObjectFull[],
     type: string,
-    scrollY: React.MutableRefObject<Animated.Value>,
+    scrollY?: React.MutableRefObject<Animated.Value>,
     listShape: "box" | "bar" | "thin-bar",
     headerData?: {
         images: customTypes.ImageObject[],
@@ -210,9 +210,8 @@ const PlaylistList = (props:PropsType) => {
    
     const parsedData = parseListData(data, type);
 
-    
+    if(scrollY && headerData){
     return (
-        
         <Animated.FlatList
         //todos: Make Header conditional based on some props, idk how im going to do this with the different screens yet tho
             ListHeaderComponent={renderedHeader()}
@@ -226,5 +225,16 @@ const PlaylistList = (props:PropsType) => {
             )}
         />
     )
+    }
+    else{
+        return(
+            <FlatList
+            data={parsedData}
+            renderItem={renderedItem}
+            keyExtractor={(item, index)=>{return (parsedData[index].itemData.id)}}
+            style={{alignSelf:"flex-start", width:"100%", height: "100%"}}
+            />
+        )
+    }
 }
 export default PlaylistList;

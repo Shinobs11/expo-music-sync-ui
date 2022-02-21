@@ -18,7 +18,7 @@ declare global {
 
 
 export interface PlaylistScreenRouteParams extends customTypes.CommonContentProperties {}
-
+// export interface PlaylistListScreenRouteParams extends customTypes.CommonContentProperties {}
 
 export type RootStackParamList = {
   [index: string]: any
@@ -27,7 +27,8 @@ export type RootStackParamList = {
   NotFound: undefined;
   album: undefined;
   artist: undefined;
-  playlist: PlaylistScreenRouteParams
+  playlist: PlaylistScreenRouteParams,
+  playlistList: undefined // actually not sure yet how I'm going to handle this, so no params
 };
 
 

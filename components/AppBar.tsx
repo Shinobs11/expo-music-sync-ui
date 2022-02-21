@@ -1,10 +1,11 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import React from 'react';
-import { Platform, Dimensions, StyleSheet, PixelRatio, useWindowDimensions, Button, Text, View, Animated } from 'react-native'
+import { Platform, Dimensions, StyleSheet, PixelRatio, useWindowDimensions, Button, Text, View, Animated, Pressable } from 'react-native'
 import {useState} from 'react';
 import { MaterialIcons, Ionicons } from '@expo/vector-icons';
 import { useTheme, useNavigation } from '@react-navigation/native';
 import { HStack, Icon, IconButton } from 'native-base';
+
 
 
 
@@ -65,6 +66,16 @@ const AppBar = (props: PropType) => {
     //TODOS: For now I'm going to implement toggle for the text, but I'd like to be able to animate through this prop if
     // it doesn't hurt performance
     //TODOS: Migrate away from native-base components when ready, I don't think they'll provide great performance.
+    const BackButton = () =>{
+        const backNav = () =>{
+                navigation.goBack();
+        }
+        return(
+                <Pressable onPress={navigation.goBack}>
+                    <IconButton  icon={<Icon as={Ionicons} name="arrow-back" size="sm" color="white" />} />
+                </Pressable>
+        )
+    }
     return (
         <>
             <HStack style={s.container}>
@@ -72,15 +83,23 @@ const AppBar = (props: PropType) => {
                 <HStack style={s.textView}>
                     { props.headerText && props.scrollPos ?
                     <>
-                    <IconButton icon={<Icon as={Ionicons} name="arrow-back" size="sm" color="white" />} />
+                    <BackButton/>
                     <Animated.Text style={{opacity:animateOpacity(props.scrollPos as React.MutableRefObject<Animated.Value>),...s.text}}>
                         {props.headerText}
                     </Animated.Text>
                     </> 
+                    :(
+                    props.headerText ? <>
+                    <BackButton/>
+                    <Text style={s.text}>
+                        {props.headerText}
+                    </Text>
+                    </>
                     :
                     <Text style={s.text}>
                         Hello there!
                     </Text>
+                    )
                     }
                 </HStack>
                 <HStack>

@@ -17,9 +17,10 @@ import NotFoundScreen from '../screens/NotFoundScreen';
 import HomeScreen from '../screens/HomeScreen';
 import LibraryScreen from '../screens/LibraryScreen';
 import PlaylistScreen from '../screens/PlaylistScreen';
+import PlaylistListScreen from '../screens/PlaylistListScreen';
 import { RootStackParamList, RootTabParamList, RootTabScreenProps } from '../types';
 import LinkingConfiguration from './LinkingConfiguration';
-import { ContentTypes } from '../constants/ContentTypes';
+import { ContentTypes, ContentScreens } from '../constants/ContentConstants';
 import ContentHeader from '../components/base/ContentHeader';
 export default function Navigation({ colorScheme }: { colorScheme: ColorSchemeName }) {
   return (
@@ -44,7 +45,8 @@ function RootNavigator() {
       <Stack.Screen name="NotFound" component={NotFoundScreen} options={{ title: 'Oops!' }} />
       {/* <Stack.Screen name={ContentTypes.album} component={AlbumScreen}/>
       <Stack.Screen name={ContentTypes.artist} component={ArtistScreen}/> */}
-      <Stack.Screen name={ContentTypes.playlist} component={PlaylistScreen} options={{ headerShown: false }} />
+      <Stack.Screen name={ContentScreens.playlist} component={PlaylistScreen} options={{ headerShown: false }} />
+      <Stack.Screen name={ContentScreens.playlistList} component={PlaylistListScreen} options={{headerShown:false}}/>
       <Stack.Group screenOptions={{ presentation: 'modal' }}>
         <Stack.Screen name="Modal" component={ModalScreen} />
       </Stack.Group>

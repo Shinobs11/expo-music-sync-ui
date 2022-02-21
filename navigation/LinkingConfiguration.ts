@@ -6,7 +6,7 @@
 
 import { LinkingOptions } from '@react-navigation/native';
 import * as Linking from 'expo-linking';
-import { ContentTypes } from '../constants/ContentTypes';
+import { ContentTypes } from '../constants/ContentConstants';
 import { RootStackParamList } from '../types';
 import LibraryScreen from '../screens/LibraryScreen';
 
@@ -33,6 +33,7 @@ const linking: LinkingOptions<RootStackParamList> = {
       [ContentTypes.playlist]: ContentTypes.playlist,
       [ContentTypes.album]: ContentTypes.album,
       [ContentTypes.artist]: ContentTypes.artist,
+      playlistList: "playlistList" // i think i mightve goofed
     //   [ContentTypes.track]: ContentTypes.track why would a track have a dedicated screen?
     },
   },
