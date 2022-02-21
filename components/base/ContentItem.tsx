@@ -1,10 +1,10 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import React from 'react';
-import { VStack,  Center, Box, Divider, Text, HStack} from 'native-base';
+import { VStack,  Center, Box, Divider,  HStack} from 'native-base';
 import { useTheme} from '@react-navigation/native'
-import {StyleSheet, Image,  View} from 'react-native';
-import { propsFlattener } from 'native-base/lib/typescript/hooks/useThemeProps/propsFlattener';
+import {StyleSheet, Image,  View, Pressable, Text} from 'react-native';
+
 import customTypes from '../../types/CustomTypes';
 
 //todos: need to make a content item with an image to left and text to right
@@ -17,7 +17,7 @@ export interface ContentItemProps{
     contentName: string,
     contentOwner?: string,
     image?: string,
-    nav: ()=>void
+    nav?: ()=>void
 }
 
 const ContentItem = (props:ContentItemProps) => {
@@ -38,7 +38,14 @@ const ContentItem = (props:ContentItemProps) => {
             height: "100%",
             width: 100,    
         },
-
+        nameText:{
+            fontSize:14,
+            color: colors.text
+        },
+        ownerText:{
+            fontSize:14,
+            color:colors.text
+        }
     })
     
     const Container = ({children}:{children:React.ReactNode}) =>{
@@ -66,10 +73,10 @@ const ContentItem = (props:ContentItemProps) => {
             return(
                 <View style={s.textContainer} >
                 <VStack >
-                    <Text fontSize={14}   color={colors.text}>
+                    <Text style={s.nameText}>
                         {props.contentName}
                     </Text>
-                    <Text fontSize={14}  color={colors.text}>
+                    <Text style={s.ownerText}>
                         {props.contentOwner}
                     </Text>
                 </VStack>
@@ -79,7 +86,7 @@ const ContentItem = (props:ContentItemProps) => {
         else{
             return(
                 <View style={s.textContainer}>
-            <Text fontSize={14} color={colors.text}>
+            <Text style={s.nameText}>
                 {props.contentName}
             </Text>
             </View>
@@ -91,9 +98,8 @@ const ContentItem = (props:ContentItemProps) => {
 
     
     return (
-    
+        <Pressable onPress={props.nav}>
             <Container>
-                
                 <Image source={{uri: props.image}}
                 // height={40}
                 // width={40}
@@ -102,9 +108,8 @@ const ContentItem = (props:ContentItemProps) => {
                 />
                 
                 <ContentText/>
-                
             </Container>
-            
+        </Pressable>
     )
 }
 

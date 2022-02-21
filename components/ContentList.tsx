@@ -11,18 +11,30 @@ import Navigation from '../navigation/index';
 import { RootTabScreenProps, RootStackParamList, RootStackScreenProps} from '../types';
 import { NativeStackScreenProps, NativeStackNavigationProp } from '@react-navigation/native-stack';
 import ContentHeader from '../components/base/ContentHeader';
-
+import {ContentTypes} from '../constants/ContentTypes'
+import {Theme}from '@react-navigation/native';
 
 //TODOS: generalize component to reuse for other types of lists
 
 //Screw typescript + react-navigation oh my god i give up on trying to figure out the mess of properly typing navigators
 type PropsType = {
-    data: customTypes.ContentListResponseData[],
+    data: customTypes.ContentListResponseData[] | customTypes.TrackObjectFull[],
     type: string,
     scrollY: React.MutableRefObject<Animated.Value>,
-    listShape: "box" | "bar" | "thin-bar"
+    listShape: "box" | "bar" | "thin-bar",
+    headerData?: {
+        images: customTypes.ImageObject[],
+        name: string,
+        owner?: string,
+        type: string,
+    }
 }
-
+type HeaderDataType ={
+    images: customTypes.ImageObject[],
+    name: string,
+    owner?: string,
+    type: string,
+}
 /**
  * One thing to note is that every playlist image is going to be of the form
  * https://mosaic.scdn.co/${60 | 300 | 640}/${some id}
@@ -52,11 +64,29 @@ const renderedItem = ({ item, index, separators }: ListRenderItemInfo<ContentIte
 
 
 
-
 const PlaylistList = (props:PropsType) => {
     const theme = useTheme();
     const navigation = useNavigation();
-    const { data, scrollY, type, listShape } = props;
+    const { data, scrollY, type, listShape, headerData } = props;
+
+    const renderedHeader = () =>{
+        if(headerData != undefined){
+        const validHeaderData = headerData as HeaderDataType;
+        return(
+        <ContentHeader
+                    name={validHeaderData.name}
+                    images={validHeaderData.images}
+                    type={validHeaderData.type}
+                    colorTheme={theme}
+                    owner={validHeaderData.owner}
+                    />)
+        }
+        else{
+            return undefined;
+        }
+    }
+    
+
     const parseListData = (data:unknown,type:string)=>{
         //todos: Try to implement support for full objects
     
@@ -68,9 +98,10 @@ const PlaylistList = (props:PropsType) => {
                 id: data.id,
                 name: data.name,
                 type: data.type,
-                uri: data.uri
+                uri: data.uri,
+                images: data.images
             }
-            navigation.navigate(data.type, common)
+            navigation.navigate(type, common)
         }
         }
     
@@ -148,23 +179,23 @@ const PlaylistList = (props:PropsType) => {
                 //is_playable
                 name: data.name,
                 track_number: data.track_number,
+                type: data.type
                 },
-                nav: loadedNav(data),
                 contentShape: listShape,
                 imageShape: "no-image",
                 contentName: data.name,
             }
         }
         switch(type){
-            case "album":{
+            case ContentTypes.album:{
                 const albumData = data as customTypes.AlbumObjectSimplified[];
                 return albumData.map(parseAlbumData)
             }
-            case "artist":{
+            case ContentTypes.artist:{
                 const artistData = data as customTypes.ArtistObjectFull[];
                 return artistData.map(parseArtistData);
             }
-            case "playlist":{
+            case ContentTypes.playlist:{
                 const playlistData = data as customTypes.PlaylistObjectSimplified[];
                 return playlistData.map(parsePlaylistData)
             }
@@ -179,17 +210,12 @@ const PlaylistList = (props:PropsType) => {
    
     const parsedData = parseListData(data, type);
 
-    const image:customTypes.ImageObject = {height:null,url:"https://blend-playlist-covers.spotifycdn.com/v2/blend_LARGE-gold-yellow-en.jpg",width:null}
+    
     return (
         
         <Animated.FlatList
         //todos: Make Header conditional based on some props, idk how im going to do this with the different screens yet tho
-            ListHeaderComponent={<ContentHeader
-                name="Lizzie + shino Lizzie + shino"
-                images={image}
-                type="playlist"
-                colorTheme={theme}
-                />}
+            ListHeaderComponent={renderedHeader()}
             data={parsedData}
             renderItem={renderedItem}
             keyExtractor={(item, index) => { return (parsedData[index].itemData.id) }}

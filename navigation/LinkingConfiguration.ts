@@ -6,8 +6,9 @@
 
 import { LinkingOptions } from '@react-navigation/native';
 import * as Linking from 'expo-linking';
-
+import { ContentTypes } from '../constants/ContentTypes';
 import { RootStackParamList } from '../types';
+import LibraryScreen from '../screens/LibraryScreen';
 
 const linking: LinkingOptions<RootStackParamList> = {
   prefixes: [Linking.makeUrl('/')],
@@ -15,21 +16,24 @@ const linking: LinkingOptions<RootStackParamList> = {
     screens: {
       Root: {
         screens: {
-          TabOne: {
+          Home: {
             screens: {
-              TabOneScreen: 'one',
+              HomeScreen: 'home',
             },
           },
-          TabTwo: {
+          Library: {
             screens: {
-              TabTwoScreen: 'two',
+              LibraryScreen: 'library',
             },
           },
         },
       },
       Modal: 'modal',
       NotFound: '*',
-      Playlist: "playlist"
+      [ContentTypes.playlist]: ContentTypes.playlist,
+      [ContentTypes.album]: ContentTypes.album,
+      [ContentTypes.artist]: ContentTypes.artist,
+    //   [ContentTypes.track]: ContentTypes.track why would a track have a dedicated screen?
     },
   },
 };

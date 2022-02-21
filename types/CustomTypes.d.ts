@@ -67,19 +67,7 @@ export interface ImageObject {
      */
     width?: number | undefined | null;
 }
-// export interface ContentTypes {
-//     [index: string]: any
-//     "artist": string,
-//     "playlist": string,
-//     "album": string,
-//     "show": string,
-//     "episode": string  
-// }
-// export type Artist = Pick<ContentTypes, "artist">
-// export type Playlist = Pick<ContentTypes, "playlist">
-// export type Album = Pick<ContentTypes, "album">
-// export type Show = Pick<ContentTypes, "show">
-// export type Episode = Pick<ContentTypes, "episode">
+
 export interface PagingObject<T> {
     href: string;
     items: T[];
@@ -188,11 +176,6 @@ export interface PagingObject<T> {
 }
 
 export interface ListOfCurrentUsersPlaylistsResponse extends PagingObject<PlaylistObjectSimplified> {}
-
-
-
-
-
 
 /**
  * !ARTIST TYPES
@@ -329,16 +312,6 @@ export interface AlbumObjectFull extends AlbumObjectSimplified {
     tracks: PagingObject<TrackObjectSimplified>;
 }
 
-
-
-
-
-
-
-
-
-
-
 /**
  * !TRACK TYPES
  */
@@ -423,12 +396,7 @@ export interface TrackObjectSimplified {
      * The track in the `linked_from` object contains information about the originally requested track.
      */
     linked_from?: TrackLinkObject | undefined;
-    /**
-     * Part of the response when [Track Relinking](https://developer.spotify.com/documentation/general/guides/track-relinking-guide/) is applied,
-     * the original track is not available in the given market, and Spotify did not have any tracks to relink it with.
-     * The track response will still contain metadata for the original track, and a restrictions object containing the reason
-     * why the track is not available: `"restrictions" : {"reason" : "market"}`.
-     */
+
     restrictions?: RestrictionsObject | undefined;
     /**
      * The name of the track.
@@ -458,17 +426,19 @@ export interface TrackObjectSimplified {
  */
 
 export interface CommonContentProperties{
+    [index:string]: any
     id: string,
     type: string,
     name: string,
     href: string,
     external_url: ExternalUrlObject,
-    uri: string
+    uri: string,
+    images: ImageObject[]
 }
 
 
 // //TODOS: Make sure that we request full data upon entering object
-export type ContentListResponseData = PlaylistObjectSimplified | PlaylistObjectFull| AlbumObjectSimplified | AlbumObjectFull | TrackObjectFull | TrackObjectSimplified | ArtistObjectSimplified | ArtistObjectFull
+export type ContentListResponseData = PlaylistObjectSimplified | PlaylistObjectFull| AlbumObjectSimplified | AlbumObjectFull | ArtistObjectFull
 
 
 export type AlbumContentItem = {
@@ -517,61 +487,9 @@ export type TrackContentItem = {
         //is_playable
         name: string,
         track_number: number,
+        type: string
         
 }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 export default customTypes;

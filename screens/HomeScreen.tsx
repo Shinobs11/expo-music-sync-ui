@@ -5,7 +5,7 @@ import EditScreenInfo from '../components/EditScreenInfo';
 import { Text } from '../components/Themed';
 import testPlaylistData from '../test-data/playlists.json'
 import { RootTabScreenProps } from '../types';
-import Example from '../components/Example';
+
 import AppBar from '../components/AppBar';
 import ContentItem from '../components/base/ContentItem'
 import ContentList from '../components/ContentList'
@@ -13,7 +13,7 @@ import {useRef} from 'react';
 import ContentHeader from '../components/base/ContentHeader';
 import customTypes from '../types/CustomTypes';
 
-function TabOneScreen(props: RootTabScreenProps<any>) {
+function HomeScreen(props: RootTabScreenProps<any>) {
     const scrollY = useRef(new Animated.Value(0));
     const data = testPlaylistData.items as  customTypes.ListOfCurrentUsersPlaylistsResponse["items"];
     
@@ -34,4 +34,4 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   }
 });
-export default TabOneScreen
+export default HomeScreen

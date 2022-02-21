@@ -1,11 +1,13 @@
+/* eslint-disable @typescript-eslint/no-namespace */
 /**
  * Learn more about using TypeScript with React Navigation:
  * https://reactnavigation.org/docs/typescript/
  */
-
+import customTypes from './types/CustomTypes';
 import { BottomTabScreenProps, BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
-import { CompositeScreenProps, NavigatorScreenParams, CompositeNavigationProp } from '@react-navigation/native';
+import { CompositeScreenProps, NavigatorScreenParams, CompositeNavigationProp, ParamListBase } from '@react-navigation/native';
 import { NativeStackScreenProps, NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { ContentTypes } from './constants/ContentTypes';
 
 declare global {
   namespace ReactNavigation {
@@ -13,13 +15,21 @@ declare global {
   }
 }
 
+
+
+export interface PlaylistScreenRouteParams extends customTypes.CommonContentProperties {}
+
+
 export type RootStackParamList = {
   [index: string]: any
   Root: NavigatorScreenParams<RootTabParamList> | undefined;
   Modal: undefined;
   NotFound: undefined;
-  Playlist: undefined;
+  album: undefined;
+  artist: undefined;
+  playlist: PlaylistScreenRouteParams
 };
+
 
 export type RootStackScreenProps<Screen extends keyof RootStackParamList> = NativeStackScreenProps<
   RootStackParamList,
@@ -27,8 +37,8 @@ export type RootStackScreenProps<Screen extends keyof RootStackParamList> = Nati
 >;
 
 export type RootTabParamList = {
-  TabOne: undefined;
-  TabTwo: undefined;
+  Home: undefined;
+  Library: undefined;
 };
 
 export type RootTabScreenProps<Screen extends keyof RootTabParamList> = CompositeScreenProps<

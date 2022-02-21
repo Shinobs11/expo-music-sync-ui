@@ -3,7 +3,7 @@
 
 
 import { Animated, Platform, StyleSheet } from 'react-native';
-import { RootStackScreenProps } from '../types';
+import { RootStackScreenProps, PlaylistScreenRouteParams } from '../types';
 import EditScreenInfo from '../components/EditScreenInfo';
 import { Text, View } from '../components/Themed';
 import React, { useRef } from 'react';
@@ -11,12 +11,12 @@ import AppBar from '../components/AppBar';
 import ContentList from '../components/ContentList';
 import lizziePlaylistItems from '../test-data/lizziePlaylistItems.json'
 import customTypes from '../types/CustomTypes';
-
-export default function PlaylistScreen(props:RootStackScreenProps<any>) {
+import { ContentTypes } from '../constants/ContentTypes';
+export default function PlaylistScreen({navigation, route}:RootStackScreenProps<"playlist">) {
 
     const scrollY = useRef(new Animated.Value(0));
-    const data = lizziePlaylistItems.items as customTypes.PagingObject<customTypes.PlaylistTrackObject>["items"]
-    const playlistItems = data.map((x)=>x.track) as customTypes.TrackObjectFull[];
+    const data = lizziePlaylistItems as customTypes.PagingObject<customTypes.PlaylistTrackObject>
+    const playlistItems = data.items.map((x)=>x.track) as customTypes.TrackObjectFull[];
   return (
     <View
     style={styles.container}
@@ -25,8 +25,14 @@ export default function PlaylistScreen(props:RootStackScreenProps<any>) {
         <AppBar scrollPos={scrollY} headerText={"Lizzie + Shino"}/>
         <ContentList 
         scrollY={scrollY} 
-        type={"playlist"}
+        type={ContentTypes.track}
         data={playlistItems}
+        headerData={{
+            images: route.params.images,
+            name: route.params.name,
+            owner: route.params.owner,
+            type: route.params.type
+        }}
         listShape={"bar"}
         />
     </View>

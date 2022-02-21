@@ -2,8 +2,8 @@
 import React from 'react';
 import { Platform, Dimensions, StyleSheet, PixelRatio, useWindowDimensions, Button, Text, View, Animated } from 'react-native'
 import {useState} from 'react';
-import { MaterialIcons } from '@expo/vector-icons';
-import { useTheme } from '@react-navigation/native';
+import { MaterialIcons, Ionicons } from '@expo/vector-icons';
+import { useTheme, useNavigation } from '@react-navigation/native';
 import { HStack, Icon, IconButton } from 'native-base';
 
 
@@ -21,6 +21,7 @@ interface PropType {
     scrollPos?: React.MutableRefObject<Animated.Value>
 }
 const AppBar = (props: PropType) => {
+    const navigation = useNavigation();
     //TODO: have some sort of state pass the contentHeaderHeight into this
     const animateOpacity = (scrollPos: React.MutableRefObject<Animated.Value>) =>{
         const contentHeaderHeight = 160;
@@ -67,11 +68,15 @@ const AppBar = (props: PropType) => {
     return (
         <>
             <HStack style={s.container}>
+
                 <HStack style={s.textView}>
-                    { props.headerText && props.scrollPos ? 
+                    { props.headerText && props.scrollPos ?
+                    <>
+                    <IconButton icon={<Icon as={Ionicons} name="arrow-back" size="sm" color="white" />} />
                     <Animated.Text style={{opacity:animateOpacity(props.scrollPos as React.MutableRefObject<Animated.Value>),...s.text}}>
                         {props.headerText}
                     </Animated.Text>
+                    </> 
                     :
                     <Text style={s.text}>
                         Hello there!

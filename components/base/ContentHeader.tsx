@@ -6,7 +6,7 @@ import {Theme}from '@react-navigation/native';
 
 
 interface PropsType {
-    images: customTypes.ImageObject,
+    images: customTypes.ImageObject[],
     name: string,
     owner?: string,
     type: string,
@@ -65,7 +65,7 @@ class ContentHeader extends React.Component<PropsType>{
         <Image
         accessibilityLabel={this.props.name}
         style={this.s.image}
-        source={{uri:this.props.images.url}}
+        source={{uri:this.props.images[0].url}}
         />
         </View>
         <View style={this.s.sideContainer}>
