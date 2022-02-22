@@ -4,7 +4,10 @@ import { Platform, Dimensions, StyleSheet, PixelRatio, useWindowDimensions, Butt
 import {useState} from 'react';
 import { MaterialIcons, Ionicons } from '@expo/vector-icons';
 import { useTheme, useNavigation } from '@react-navigation/native';
-import { HStack, Icon, IconButton } from 'native-base';
+import { HStack } from 'native-base';
+import { RootStackScreenProps, RootStackParamList } from '../types';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+
 
 
 
@@ -21,7 +24,10 @@ interface PropType {
     headerText?: string,
     scrollPos?: React.MutableRefObject<Animated.Value>
 }
+
+
 const AppBar = (props: PropType) => {
+    const {colors, dark} = useTheme()
     const navigation = useNavigation();
     //TODO: have some sort of state pass the contentHeaderHeight into this
     const animateOpacity = (scrollPos: React.MutableRefObject<Animated.Value>) =>{
@@ -35,11 +41,11 @@ const AppBar = (props: PropType) => {
         return scrollPos.current.interpolate({inputRange:inputRange, outputRange: outputRange})
     }
 
-
+    
 
 
     const { height, width } = useWindowDimensions();
-    const { dark, colors } = useTheme();
+    
     const s = StyleSheet.create({
         container: {
             paddingHorizontal: 15,
@@ -62,20 +68,21 @@ const AppBar = (props: PropType) => {
         },
 
     })
-
-    //TODOS: For now I'm going to implement toggle for the text, but I'd like to be able to animate through this prop if
-    // it doesn't hurt performance
-    //TODOS: Migrate away from native-base components when ready, I don't think they'll provide great performance.
-    const BackButton = () =>{
+    const BackButton = ({nav}:{nav:any}) =>{
         const backNav = () =>{
-                navigation.goBack();
+                console.log("Back pressed");
+                nav.goBack();
         }
         return(
-                <Pressable onPress={navigation.goBack}>
-                    <IconButton  icon={<Icon as={Ionicons} name="arrow-back" size="sm" color="white" />} />
+                <Pressable onPress={backNav}>
+                    <Ionicons  name="arrow-back" size={30} color={colors.text} />
                 </Pressable>
         )
     }
+    //TODOS: For now I'm going to implement toggle for the text, but I'd like to be able to animate through this prop if
+    // it doesn't hurt performance
+    //TODOS: Migrate away from native-base components when ready, I don't think they'll provide great performance.
+    
     return (
         <>
             <HStack style={s.container}>
@@ -83,14 +90,14 @@ const AppBar = (props: PropType) => {
                 <HStack style={s.textView}>
                     { props.headerText && props.scrollPos ?
                     <>
-                    <BackButton/>
+                    <BackButton nav={navigation}/>
                     <Animated.Text style={{opacity:animateOpacity(props.scrollPos as React.MutableRefObject<Animated.Value>),...s.text}}>
                         {props.headerText}
                     </Animated.Text>
                     </> 
                     :(
                     props.headerText ? <>
-                    <BackButton/>
+                    <BackButton nav={navigation}/>
                     <Text style={s.text}>
                         {props.headerText}
                     </Text>
@@ -103,9 +110,9 @@ const AppBar = (props: PropType) => {
                     }
                 </HStack>
                 <HStack>
-                    <IconButton icon={<Icon as={MaterialIcons} name="search" size="sm" color="white" />} />
-                    <IconButton icon={<Icon as={MaterialIcons} name="favorite" size="sm" color="white" />} />
-                    <IconButton icon={<Icon as={MaterialIcons} name="settings" size="sm" color="white" />} />
+                    <MaterialIcons name="search" size={30} color={colors.text} />
+                    <MaterialIcons name="favorite" size={30} color={colors.text} />
+                    <MaterialIcons name="settings" size={30} color={colors.text} />
                 </HStack>
             </HStack>
         </>
